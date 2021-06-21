@@ -317,7 +317,7 @@ export default function AdvancedFilterDataGrid() {
                         filter
                         filterPlaceholder="Search by name"
                         filterMatchMode={nameFilterMatchMode}
-                        frozen
+                        sortable
                     />
                     <Column field="country" filterField="country.name" header="Country" body={countryBodyTemplate} filter filterPlaceholder="Search by country" filterMatchMode="contains" />
                     <Column field="representative.name" header="Representative" body={representativeBodyTemplate} filter filterElement={representativeFilter} />

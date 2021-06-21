@@ -13,6 +13,7 @@ import ColAndRowReorderingDataGrid from './components/ColAndRowReorderingDataGri
 import ColumnHidingDataGrid from './components/ColumnHidingDataGrid/ColumnHidingDataGrid'
 import MultiselectRowsDataGrid from './components/MultiselectRowsDataGrid/MultiselectRowsDataGrid'
 import RowEditingDataGrid from './components/RowEditingDataGrid/RowEditingDataGrid'
+import ColumnSortingDataGrid from './components/ColumnSortingDataGrid/ColumnSortingDataGrid'
 
 function App() {
 
@@ -35,6 +36,9 @@ function App() {
           </TabPanel>
           <TabPanel header="Row Editing">
             <RowEditingDataGrid />
+          </TabPanel>
+          <TabPanel header="Column Sorting">
+            <ColumnSortingDataGrid />
           </TabPanel>
         </TabView>
       </div>

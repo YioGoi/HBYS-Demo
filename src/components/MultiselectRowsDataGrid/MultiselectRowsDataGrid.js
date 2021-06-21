@@ -25,9 +25,6 @@ export default function MultiselectRowsDataGrid() {
 
     return (
         <div className="card">
-            <h5>Checkbox</h5>
-
-            <h6>Row and Checkbox Selection</h6>
             <DataTable value={products} selection={selectedProducts7} onSelectionChange={e => setSelectedProducts7(e.value)} dataKey="id">
                 <Column selectionMode="multiple" headerStyle={{ width: '3em' }}></Column>
                 <Column field="code" header="Code"></Column>

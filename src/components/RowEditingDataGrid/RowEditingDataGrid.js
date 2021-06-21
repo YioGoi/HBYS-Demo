@@ -112,7 +112,6 @@ export default function RowEditingDataGrid() {
 
     return (
         <div className="card">
-            <h5>Row Editing</h5>
             <DataTable value={products3} editMode="row" dataKey="id" onRowEditInit={onRowEditInit} onRowEditCancel={onRowEditCancel}>
                 <Column field="code" header="Code" editor={(props) => codeEditor('products3', props)}></Column>
                 <Column field="name" header="Name" editor={(props) => nameEditor('products3', props)}></Column>
