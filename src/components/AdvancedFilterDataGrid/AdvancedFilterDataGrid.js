@@ -329,6 +329,7 @@ export default function AdvancedFilterDataGrid() {
                         filter
                         filterElement={dateFilter}
                         filterFunction={filterDate}
+                        sortable
                     />
                     <Column field="status" header="Status" body={statusBodyTemplate} filter filterElement={statusFilter} />
                     <Column field="activity" header="Activity" body={activityBodyTemplate} filter filterPlaceholder="Minimum" filterMatchMode="gte" />

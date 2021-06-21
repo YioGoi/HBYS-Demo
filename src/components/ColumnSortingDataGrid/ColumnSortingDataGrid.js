@@ -38,6 +38,8 @@ export default function ColumnSortingDataGrid() {
                 <Column field="category" header="Category"></Column>
                 <Column field="quantity" header="Quantity" sortable></Column>
                 <Column field="price" header="Price" body={priceBodyTemplate} sortable></Column>
+                <Column field="description" header="Description"></Column>
+                <Column field="inventoryStatus" header="Inventory Status" sortable></Column>
             </DataTable>
         </div>
     )
