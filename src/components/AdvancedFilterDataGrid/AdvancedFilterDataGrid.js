@@ -18,6 +18,11 @@ import { ProgressBar } from 'primereact/progressbar';
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
 
+// Html Elements
+import advancedFilterIcon from '../../htmlElements/advancedFilterIcon'
+import advancedFilterListBox from '../../htmlElements/advancedFilterListBox'
+import advancedFilterOutsideClick from '../../htmlElements/advancedFilterOutsideClick'
+
 export default function AdvancedFilterDataGrid() {
     const [customers, setCustomers] = useState(null);
     const [selectedRepresentative, setSelectedRepresentative] = useState(null);
@@ -25,7 +30,12 @@ export default function AdvancedFilterDataGrid() {
     const [selectedStatus, setSelectedStatus] = useState(null);
     const [globalFilter, setGlobalFilter] = useState('');
     const [nameFilterMatchMode, setNameFilterMatchMode] = useState('contains');
+    const [dateFilterMatchMode, setDateFilterMatchMode] = useState('equals');
     const dt = useRef(null);
+
+    // // Advanced Fiters ClassNames
+    const filterNameHeaderClassName = 'filter-header-name'
+    const filterDateHeaderClassName = 'filter-header-date'
 
     const representatives = [
         { name: "Amy Elsner", image: 'amyelsner.png' },
@@ -52,18 +62,24 @@ export default function AdvancedFilterDataGrid() {
         });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+    // Name Column Advanced Filter Icon
     useEffect(() => {
-        let nameHeader = document.querySelector('.filter-header-name')
-
-        if (nameHeader) {
-            let newDivElement = document.createElement('span')
-            newDivElement.className = 'custom-filter-icon pi pi-filter';
-            nameHeader.appendChild(newDivElement)
-        }
+        // Advanced Fiters ClassNames
+        const filterNameHeaderClassName = 'filter-header-name'
+        const customNameFilterIconClassName = 'custom-name-filter-icon'
+        advancedFilterIcon(filterNameHeaderClassName, customNameFilterIconClassName)
     }, [])
 
+    // Name Column Advanced Filter ListBox
     useEffect(() => {
-        const filterOptions = [
+        // Advanced Fiters ClassNames
+        const filterNameHeaderClassName = 'filter-header-name'
+        const customNameFilterIconClassName = 'custom-name-filter-icon'
+        const filterNameListboxWrapperClassName = 'af-name-listbox-list-wrapper'
+        const filterNameListboxListClassName = 'af-name-listbox-list'
+        const filterNameListboxItemClassName = 'af-name-listbox-item'
+
+        const nameFilterOptions = [
             { name: 'StartsWith', code: 'startsWith' },
             { name: 'Contains', code: 'contains' },
             { name: 'EndsWith', code: 'endsWith' },
@@ -71,62 +87,70 @@ export default function AdvancedFilterDataGrid() {
             { name: 'NotEquals', code: 'notEquals' }
         ]
 
-        let filterHeaderNameElement = document.querySelector('.filter-header-name')
+        advancedFilterListBox(
+            filterNameHeaderClassName,
+            filterNameListboxWrapperClassName,
+            filterNameListboxListClassName,
+            filterNameListboxItemClassName,
+            customNameFilterIconClassName,
+            nameFilterOptions,
+            setNameFilterMatchMode,
+            setDateFilterMatchMode
+        )
+    }, [])
 
-        const handleClickEvent = e => {
-            e.preventDefault()
-            let newDivElement = document.createElement('div')
-            newDivElement.style.position = 'absolute'
-            newDivElement.className = 'af-listbox-list-wrapper'
-            let ulElement = document.createElement('ul')
-            newDivElement.appendChild(ulElement)
-            ulElement.className = 'af-listbox-list'
-            ulElement.setAttribute('role', 'listbox')
-            ulElement.setAttribute('aria-multiselectable', 'false')
+    // Name Column OutsideClick
+    useEffect(() => {
+        // Advanced Fiters ClassNames
+        const customNameFilterIconClassName = 'custom-name-filter-icon'
+        const filterNameListboxWrapperClassName = 'af-name-listbox-list-wrapper'
+        advancedFilterOutsideClick(customNameFilterIconClassName, filterNameListboxWrapperClassName)
+    }, [])
 
-            filterOptions.forEach(option => {
-                let liElement = document.createElement('li')
-                liElement.className = 'af-listbox-item'
-                liElement.setAttribute('aria-label', option.code)
-                liElement.setAttribute('role', 'option')
-                liElement.setAttribute('aria-selected', 'false')
-                liElement.innerHTML = option.name
+    // date Column Advanced Filter Icon
+    useEffect(() => {
+        // Advanced Fiters ClassNames
+        const filterDateHeaderClassName = 'filter-header-date'
+        const customDateFilterIconClassName = 'custom-date-filter-icon'
+        advancedFilterIcon(filterDateHeaderClassName, customDateFilterIconClassName)
+    }, [])
 
-                ulElement.appendChild(liElement)
-            })
+    // date Column Advanced Filter ListBox
+    useEffect(() => {
+        // Advanced Fiters ClassNames
+        const filterDateHeaderClassName = 'filter-header-date'
+        const customDateFilterIconClassName = 'custom-date-filter-icon'
+        const filterDateListboxWrapperClassName = 'af-date-listbox-list-wrapper'
+        const filterDateListboxListClassName = 'af-date-listbox-list'
+        const filterDateListboxItemClassName = 'af-date-listbox-item'
 
-            filterHeaderNameElement.style.position = 'relative'
-            filterHeaderNameElement.appendChild(newDivElement)
+        const dateFilterOptions = [
+            { name: 'Equals', code: 'equals' },
+            { name: 'NotEquals', code: 'notEquals' },
+            { name: 'LessThan', code: 'lt' },
+            { name: 'LessThanEqual', code: 'lte' },
+            { name: 'GreaterThan', code: 'gt' },
+            { name: 'GreaterThanEqual', code: 'gte' }
+        ]
 
-            const handleListItemClick = e => {
-                e.stopPropagation()
-                let filterOption = e.target.ariaLabel
-                console.log(filterOption)
-                setNameFilterMatchMode(filterOption)
-                newDivElement.remove()
-            }
+        advancedFilterListBox(
+            filterDateHeaderClassName,
+            filterDateListboxWrapperClassName,
+            filterDateListboxListClassName,
+            filterDateListboxItemClassName,
+            customDateFilterIconClassName,
+            dateFilterOptions,
+            setNameFilterMatchMode,
+            setDateFilterMatchMode
+        )
+    }, [])
 
-            let nameListBoxItems = document.querySelectorAll('.af-listbox-item')
-            if (nameListBoxItems) {
-
-                nameListBoxItems.forEach(item => {
-                    item.addEventListener('click', handleListItemClick);
-
-                    return () => {
-                        item.removeEventListener('click', handleListItemClick)
-                    }
-                })
-            }
-        }
-        
-        let myFilterIcon = document.querySelector('.custom-filter-icon')
-        if (myFilterIcon) {
-            myFilterIcon.addEventListener('click', handleClickEvent);
-        }
-
-        return () => {
-            myFilterIcon.removeEventListener('click', handleClickEvent)
-        }
+    // date Column OutsideClick
+    useEffect(() => {
+        // Advanced Fiters ClassNames
+        const customDateFilterIconClassName = 'custom-date-filter-icon'
+        const filterDateListboxWrapperClassName = 'af-date-listbox-list-wrapper'
+        advancedFilterOutsideClick(customDateFilterIconClassName, filterDateListboxWrapperClassName)
     }, [])
 
     const filterDate = (value, filter) => {
@@ -138,7 +162,22 @@ export default function AdvancedFilterDataGrid() {
             return false;
         }
 
-        return value === formatDate(filter);
+        switch (dateFilterMatchMode) {
+            case 'equals':
+                return value === formatDate(filter)
+            case 'notEquals':
+                return value !== formatDate(filter)
+            case 'lt':
+                return value < formatDate(filter)
+            case 'lte':
+                return value <= formatDate(filter)
+            case 'gt':
+                return value > formatDate(filter)
+            case 'gte':
+                return value >= formatDate(filter)
+            default:
+                return value === formatDate(filter)
+        }
     }
 
     const formatDate = (date) => {
@@ -262,6 +301,8 @@ export default function AdvancedFilterDataGrid() {
     const dateFilter = <Calendar value={selectedDate} onChange={onDateChange} dateFormat="yy-mm-dd" className="p-column-filter" placeholder="Registration Date" />;
     const statusFilter = <Dropdown value={selectedStatus} options={statuses} onChange={onStatusChange} itemTemplate={statusItemTemplate} placeholder="Select a Status" className="p-column-filter" showClear />;
 
+    console.log(dateFilterMatchMode)
+
     return (
         <div className="datatable-filter-demo">
             <div className="card">
@@ -271,7 +312,7 @@ export default function AdvancedFilterDataGrid() {
                     <Column
                         field="name"
                         header="Name"
-                        filterHeaderClassName='filter-header-name'
+                        filterHeaderClassName={filterNameHeaderClassName}
                         body={nameBodyTemplate}
                         filter
                         filterPlaceholder="Search by name"
@@ -283,7 +324,7 @@ export default function AdvancedFilterDataGrid() {
                     <Column
                         field="date"
                         header="Date"
-                        filterHeaderClassName='filter-header-date'
+                        filterHeaderClassName={filterDateHeaderClassName}
                         body={dateBodyTemplate}
                         filter
                         filterElement={dateFilter}
