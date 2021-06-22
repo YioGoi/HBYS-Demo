@@ -37,7 +37,7 @@ function App() {
           <TabPanel header="Row Editing">
             <RowEditingDataGrid />
           </TabPanel>
-          <TabPanel header="Column Sorting">
+          <TabPanel header="Column Sorting & Frozen Column">
             <ColumnSortingDataGrid />
           </TabPanel>
         </TabView>

@@ -32,14 +32,14 @@ export default function ColumnSortingDataGrid() {
 
     return (
         <div className="card">
-            <DataTable value={products}>
-                <Column field="code" header="Code" sortable></Column>
-                <Column field="name" header="Name" sortable></Column>
-                <Column field="category" header="Category"></Column>
-                <Column field="quantity" header="Quantity" sortable></Column>
-                <Column field="price" header="Price" body={priceBodyTemplate} sortable></Column>
-                <Column field="description" header="Description"></Column>
-                <Column field="inventoryStatus" header="Inventory Status" sortable></Column>
+            <DataTable value={products} scrollable style={{width: '1300px'}} frozenWidth="250px">
+                <Column field="code" header="Code" sortable style={{width:'250px', height: '25px'}}></Column>
+                <Column field="name" header="Name" sortable style={{width:'250px', height: '25px'}}></Column>
+                <Column field="category" header="Category" style={{width:'250px', height: '25px'}}></Column>
+                <Column field="quantity" header="Quantity" frozen sortable style={{width:'250px', height: '25px'}}></Column>
+                <Column field="price" header="Price" body={priceBodyTemplate} sortable style={{width:'250px', height: '25px'}}></Column>
+                <Column field="description" header="Description" style={{width:'250px', height: '25px'}}></Column>
+                <Column field="inventoryStatus" header="Inventory Status" sortable style={{width:'250px', height: '25px'}}></Column>
             </DataTable>
         </div>
     )
