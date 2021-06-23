@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TabView, TabPanel } from 'primereact/tabview'
 
 // Styles
@@ -14,8 +14,18 @@ import ColumnHidingDataGrid from './components/ColumnHidingDataGrid/ColumnHiding
 import MultiselectRowsDataGrid from './components/MultiselectRowsDataGrid/MultiselectRowsDataGrid'
 import RowEditingDataGrid from './components/RowEditingDataGrid/RowEditingDataGrid'
 import ColumnSortingDataGrid from './components/ColumnSortingDataGrid/ColumnSortingDataGrid'
+import SaveButton from './components/core/SaveButton/SaveButton'
+import CustomButton from './components/core/CustomButton/CustomButton'
 
 function App() {
+  // Local State
+  const [ loading, setLoading ] = useState(false)
+
+  const handleOnClick = e => {
+    e.preventDefault()
+    setLoading(true)
+    setTimeout(() => setLoading(false), 1500)
+  }
 
   return (
     <div className='tabview-demo'>
@@ -39,6 +49,25 @@ function App() {
           </TabPanel>
           <TabPanel header="Column Sorting & Frozen Column">
             <ColumnSortingDataGrid />
+          </TabPanel>
+          <TabPanel header="Core Components Example">
+            <SaveButton />
+            <br/>
+            <br/>
+            <CustomButton 
+              label='Custom Button'
+              icon='pi pi-check'
+              iconPos='left'
+              loading={loading}
+              loadingOptions={{ position: 'left' }}
+              loadingIcon='pi pi-spin pi-spinner'
+              onClick={handleOnClick}
+              className='p-button-warning'
+              badge={2}
+              badgeClassName='custom-button-badge'
+              tooltip={'I am a tooltip'}
+              tooltipOptions={{ position: 'bottom'}}
+            />
           </TabPanel>
         </TabView>
       </div>
