@@ -132,7 +132,7 @@ export default function RowEditingDataGrid() {
 
     return (
         <div className="card">
-            <Button onClick={() => setActiveRowIndex(selectedProducts4)} className="p-button-text" label="Activate 1st" />
+            <Button onClick={() => setActiveRowIndex(selectedProducts4)} className="p-button-text" label="Edit selected rows" />
             <DataTable
                 value={products3}
                 editingRows={editingRows}
