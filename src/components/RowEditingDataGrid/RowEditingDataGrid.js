@@ -16,9 +16,12 @@ import { Column } from 'primereact/column'
 import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
+import { Button } from 'primereact/button';
 
 export default function RowEditingDataGrid() {
-    const [products3, setProducts3] = useState(null);
+    const [products3, setProducts3] = useState(null)
+    const [editingRows, setEditingRows] = useState({})
+    const [selectedProducts4, setSelectedProducts4] = useState(null)
 
     let originalRows = {};
 
@@ -110,9 +113,39 @@ export default function RowEditingDataGrid() {
         return <InputNumber value={props.rowData['price']} onValueChange={(e) => onEditorValueChange(productKey, props, e.value)} mode="currency" currency="USD" locale="en-US" />
     }
 
+    const setActiveRowIndex = (selectedProducts) => {
+        let products = [...products3]
+        let _editingRows = null
+
+        selectedProducts.forEach(product => {
+            let selectedProductIndex = products.findIndex(pd => pd.id === product.id)
+            originalRows[selectedProductIndex] = { ...products[selectedProductIndex] }
+            _editingRows = { ..._editingRows, ...{ [`${products[selectedProductIndex].id}`]: true } }
+        })
+
+        setEditingRows(_editingRows)
+    }
+
+    const onRowEditChange = (event) => {
+        setEditingRows(event.data);
+    }
+
     return (
         <div className="card">
-            <DataTable value={products3} editMode="row" dataKey="id" onRowEditInit={onRowEditInit} onRowEditCancel={onRowEditCancel}>
+            <Button onClick={() => setActiveRowIndex(selectedProducts4)} className="p-button-text" label="Activate 1st" />
+            <DataTable
+                value={products3}
+                editingRows={editingRows}
+                editMode="row"
+                dataKey="id"
+                onRowEditInit={onRowEditInit}
+                onRowEditCancel={onRowEditCancel}
+                onRowEditChange={onRowEditChange}
+                selectionMode="multiple"
+                //cellSelection
+                selection={selectedProducts4}
+                onSelectionChange={e => setSelectedProducts4(e.value)}
+            >
                 <Column field="code" header="Code" editor={(props) => codeEditor('products3', props)}></Column>
                 <Column field="name" header="Name" editor={(props) => nameEditor('products3', props)}></Column>
                 <Column field="inventoryStatus" header="Status" body={statusBodyTemplate} editor={(props) => statusEditor('products3', props)}></Column>
