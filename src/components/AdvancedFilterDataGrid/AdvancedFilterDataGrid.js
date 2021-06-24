@@ -17,6 +17,8 @@ import { Button } from 'primereact/button';
 import { ProgressBar } from 'primereact/progressbar';
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
+import { ContextMenu } from "primereact/contextmenu";
+import { PrimeIcons } from 'primereact/api';
 
 // Html Elements
 import advancedFilterIcon from '../../htmlElements/advancedFilterIcon'
@@ -24,6 +26,7 @@ import advancedFilterListBox from '../../htmlElements/advancedFilterListBox'
 import advancedFilterOutsideClick from '../../htmlElements/advancedFilterOutsideClick'
 
 export default function AdvancedFilterDataGrid() {
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [customers, setCustomers] = useState(null);
     const [selectedRepresentative, setSelectedRepresentative] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -32,22 +35,41 @@ export default function AdvancedFilterDataGrid() {
     const [nameFilterMatchMode, setNameFilterMatchMode] = useState('contains');
     const [dateFilterMatchMode, setDateFilterMatchMode] = useState('equals');
     const dt = useRef(null);
+    const cm = useRef(null);
 
     // // Advanced Fiters ClassNames
     const filterNameHeaderClassName = 'filter-header-name'
     const filterDateHeaderClassName = 'filter-header-date'
 
     const representatives = [
-        { name: "Amy Elsner", image: 'amyelsner.png' },
-        { name: "Anna Fali", image: 'annafali.png' },
-        { name: "Asiya Javayant", image: 'asiyajavayant.png' },
-        { name: "Bernardo Dominic", image: 'bernardodominic.png' },
-        { name: "Elwin Sharvill", image: 'elwinsharvill.png' },
-        { name: "Ioni Bowcher", image: 'ionibowcher.png' },
-        { name: "Ivan Magalhaes", image: 'ivanmagalhaes.png' },
-        { name: "Onyama Limba", image: 'onyamalimba.png' },
-        { name: "Stephen Shaw", image: 'stephenshaw.png' },
-        { name: "XuXue Feng", image: 'xuxuefeng.png' }
+        { name: "Amy Elsner", image: PrimeIcons.ANDROID },
+        { name: "Anna Fali", image: PrimeIcons.ARROW_UP },
+        { name: "Asiya Javayant", image: PrimeIcons.BARS },
+        { name: "Bernardo Dominic", image: PrimeIcons.BOOKMARK },
+        { name: "Elwin Sharvill", image: PrimeIcons.CAMERA },
+        { name: "Ioni Bowcher", image: PrimeIcons.CARET_UP },
+        { name: "Ivan Magalhaes", image: PrimeIcons.CHEVRON_LEFT },
+        { name: "Onyama Limba", image: PrimeIcons.CLOUD },
+        { name: "Stephen Shaw", image: PrimeIcons.COMMENT },
+        { name: "XuXue Feng", image: PrimeIcons.COPY }
+    ];
+
+    const menuModel = [
+        {
+            label: "View",
+            icon: "pi pi-fw pi-search",
+            //command: () => viewProduct(selectedProduct)
+        },
+        {
+            label: "Delete",
+            icon: "pi pi-fw pi-times",
+            //command: () => deleteProduct(selectedProduct)
+        },
+        {
+            label: "Copy",
+            icon: "pi pi-copy pi-copy",
+            command: () => copyToClipboard(selectedProduct)
+        }
     ];
 
     const statuses = [
@@ -195,6 +217,23 @@ export default function AdvancedFilterDataGrid() {
         return date.getFullYear() + '-' + month + '-' + day;
     }
 
+    const copyToClipboard = (str) => {
+        // Create new element
+        var el = document.createElement("textarea");
+        // Set value (string to be copied)
+        el.value = str;
+        // Set non-editable to avoid focus and move outside of view
+        el.setAttribute("readonly", "");
+        el.style = { position: "absolute", left: "-9999px" };
+        document.body.appendChild(el);
+        // Select text inside element
+        el.select();
+        // Copy text to clipboard
+        document.execCommand("copy");
+        // Remove temporary element
+        document.body.removeChild(el);
+    };
+
     const onRepresentativesChange = (e) => {
         dt.current.filter(e.value, 'representative.name', 'in');
         setSelectedRepresentative(e.value);
@@ -223,7 +262,7 @@ export default function AdvancedFilterDataGrid() {
         return (
             <React.Fragment>
                 <span className="p-column-title">Country</span>
-                <img alt="flag" src="showcase/demo/images/flag_placeholder.png" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} className={`flag flag-${rowData.country.code}`} width={30} />
+                <i alt="flag" className="pi pi-flag" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={30} />
                 <span className="image-text">{rowData.country.name}</span>
             </React.Fragment>
         );
@@ -233,7 +272,7 @@ export default function AdvancedFilterDataGrid() {
         return (
             <React.Fragment>
                 <span className="p-column-title">Representative</span>
-                <img alt={rowData.representative.name} src={`showcase/demo/images/avatar/${rowData.representative.image}`} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={32} style={{ verticalAlign: 'middle' }} />
+                <i alt={rowData.representative.name} className="pi pi-user" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={32} style={{ verticalAlign: 'middle' }} />
                 <span className="image-text">{rowData.representative.name}</span>
             </React.Fragment>
         );
@@ -269,7 +308,7 @@ export default function AdvancedFilterDataGrid() {
     const representativesItemTemplate = (option) => {
         return (
             <div className="p-multiselect-representative-option">
-                <img alt={option.name} src={`showcase/demo/images/avatar/${option.image}`} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={32} style={{ verticalAlign: 'middle' }} />
+                <i alt={option.name} className={option.image} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={32} style={{ verticalAlign: 'middle' }} />
                 <span className="image-text">{option.name}</span>
             </div>
         );
@@ -305,10 +344,25 @@ export default function AdvancedFilterDataGrid() {
 
     return (
         <div className="datatable-filter-demo">
+            <ContextMenu
+                model={menuModel}
+                ref={cm}
+                onHide={() => setSelectedProduct(null)}
+            />
             <div className="card">
-                <DataTable ref={dt} value={customers} paginator rows={10}
-                    header={header} className="p-datatable-customers"
-                    globalFilter={globalFilter} emptyMessage="No customers found.">
+                <DataTable
+                    ref={dt}
+                    value={customers}
+                    paginator
+                    rows={10}
+                    header={header}
+                    className="p-datatable-customers"
+                    globalFilter={globalFilter}
+                    emptyMessage="No customers found."
+                    contextMenuSelection={selectedProduct}
+                    onContextMenuSelectionChange={(e) => setSelectedProduct(e.originalEvent.target.innerText)}
+                    onContextMenu={(e) => cm.current.show(e.originalEvent)}
+                >
                     <Column
                         field="name"
                         header="Name"
