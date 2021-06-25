@@ -15,6 +15,7 @@ import MultiselectRowsDataGrid from './components/MultiselectRowsDataGrid/Multis
 import RowEditingDataGrid from './components/RowEditingDataGrid/RowEditingDataGrid'
 import ColumnSortingDataGrid from './components/ColumnSortingDataGrid/ColumnSortingDataGrid'
 import MasterDetailDataGrid from './components/MasterDetailDataGrid/MasterDetailDataGrid'
+import ColumnGroupDataGrid from './components/ColumnGroupDataGrid/ColumnGroupDataGrid'
 import SaveButton from './components/core/SaveButton/SaveButton'
 import CustomButton from './components/core/CustomButton/CustomButton'
 
@@ -53,6 +54,9 @@ function App() {
           </TabPanel>
           <TabPanel header="Master Detail">
             <MasterDetailDataGrid />
+          </TabPanel>
+          <TabPanel header="Column Grouping">
+            <ColumnGroupDataGrid />
           </TabPanel>
           <TabPanel header="Core Components Example">
             <SaveButton />
