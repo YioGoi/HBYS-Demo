@@ -6,6 +6,8 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
 import './AdvancedFilterDataGrid.css'
+// Prime Utils
+import { classNames } from 'primereact/utils'
 
 // Prime Components
 import { DataTable } from 'primereact/datatable';
@@ -258,13 +260,35 @@ export default function AdvancedFilterDataGrid() {
         );
     }
 
+    // Return class for adding rowClass
+    const rowClass = (data) => {
+        return {
+            'row-accessories': data.country.name === 'Egypt'
+        }
+    }
+
     const countryBodyTemplate = (rowData) => {
+        // Add ClassNames with classNames Utility
+        const stockClassName = classNames({
+            'outofstock': rowData.country.name === 'Algeria',
+            'lowstock': rowData.country.name === 'Egypt',
+            'instock': rowData.country.name === 'Slovenia'
+        });
+
+        // Change classNames with some condition
+        let iconClassName = ''
+        if (rowData.country.name === 'Algeria') {
+            iconClassName = 'pi pi-angle-down'
+        } else if (rowData.country.name === 'Egypt' || rowData.country.name === 'Slovenia') {
+            iconClassName = 'pi pi-angle-up'
+        }
+
         return (
-            <React.Fragment>
+            <div className={stockClassName}>
                 <span className="p-column-title">Country</span>
-                <i alt="flag" className="pi pi-flag" onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={30} />
+                <i alt="flag" className={iconClassName} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={30} />
                 <span className="image-text">{rowData.country.name}</span>
-            </React.Fragment>
+            </div>
         );
     }
 
@@ -362,6 +386,7 @@ export default function AdvancedFilterDataGrid() {
                     contextMenuSelection={selectedProduct}
                     onContextMenuSelectionChange={(e) => setSelectedProduct(e.originalEvent.target.innerText)}
                     onContextMenu={(e) => cm.current.show(e.originalEvent)}
+                    rowClassName={rowClass}
                 >
                     <Column
                         field="name"

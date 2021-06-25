@@ -14,6 +14,7 @@ import ColumnHidingDataGrid from './components/ColumnHidingDataGrid/ColumnHiding
 import MultiselectRowsDataGrid from './components/MultiselectRowsDataGrid/MultiselectRowsDataGrid'
 import RowEditingDataGrid from './components/RowEditingDataGrid/RowEditingDataGrid'
 import ColumnSortingDataGrid from './components/ColumnSortingDataGrid/ColumnSortingDataGrid'
+import MasterDetailDataGrid from './components/MasterDetailDataGrid/MasterDetailDataGrid'
 import SaveButton from './components/core/SaveButton/SaveButton'
 import CustomButton from './components/core/CustomButton/CustomButton'
 
@@ -49,6 +50,9 @@ function App() {
           </TabPanel>
           <TabPanel header="Column Sorting & Frozen Column">
             <ColumnSortingDataGrid />
+          </TabPanel>
+          <TabPanel header="Master Detail">
+            <MasterDetailDataGrid />
           </TabPanel>
           <TabPanel header="Core Components Example">
             <SaveButton />
