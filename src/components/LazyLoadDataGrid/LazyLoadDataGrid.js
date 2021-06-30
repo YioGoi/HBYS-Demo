@@ -5,21 +5,18 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
-import './AdvancedFilterDataGrid.css'
-// Prime Utils
-import { classNames } from 'primereact/utils'
+import './LazyLoadDataGrid.css'
 
 // Prime Components
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
-import { CustomerService } from './CustomerService';
+import { CustomerService } from '../AdvancedFilterDataGrid/CustomerService';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { ProgressBar } from 'primereact/progressbar';
 import { Calendar } from 'primereact/calendar';
 import { MultiSelect } from 'primereact/multiselect';
-import { ContextMenu } from "primereact/contextmenu";
 import { PrimeIcons } from 'primereact/api';
 
 // Html Elements
@@ -27,8 +24,9 @@ import advancedFilterIcon from '../../htmlElements/advancedFilterIcon'
 import advancedFilterListBox from '../../htmlElements/advancedFilterListBox'
 import advancedFilterOutsideClick from '../../htmlElements/advancedFilterOutsideClick'
 
-export default function AdvancedFilterDataGrid() {
-    const [selectedProduct, setSelectedProduct] = useState(null);
+export default function LazyLoadDataGrid() {
+    const [loading, setLoading] = useState(false);
+    const [totalRecords, setTotalRecords] = useState(0);
     const [customers, setCustomers] = useState(null);
     const [selectedRepresentative, setSelectedRepresentative] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -36,9 +34,12 @@ export default function AdvancedFilterDataGrid() {
     const [globalFilter, setGlobalFilter] = useState('');
     const [nameFilterMatchMode, setNameFilterMatchMode] = useState('contains');
     const [dateFilterMatchMode, setDateFilterMatchMode] = useState('equals');
+    const [lazyParams, setLazyParams] = useState({
+        first: 0,
+        rows: 10,
+        page: 0,
+    });
     const dt = useRef(null);
-    const cm = useRef(null);
-
     // Advanced Fiters ClassNames
     const filterNameHeaderClassName = 'filter-header-name'
     const filterDateHeaderClassName = 'filter-header-date'
@@ -56,35 +57,36 @@ export default function AdvancedFilterDataGrid() {
         { name: "XuXue Feng", image: PrimeIcons.COPY }
     ];
 
-    const menuModel = [
-        {
-            label: "View",
-            icon: "pi pi-fw pi-search",
-            //command: () => viewProduct(selectedProduct)
-        },
-        {
-            label: "Delete",
-            icon: "pi pi-fw pi-times",
-            //command: () => deleteProduct(selectedProduct)
-        },
-        {
-            label: "Copy",
-            icon: "pi pi-copy pi-copy",
-            command: () => copyToClipboard(selectedProduct)
-        }
-    ];
-
     const statuses = [
         'unqualified', 'qualified', 'new', 'negotiation', 'renewal', 'proposal'
     ];
 
     const customerService = new CustomerService();
 
+    let loadLazyTimeout = null;
+
     useEffect(() => {
-        customerService.getCustomersLarge().then(data => {
-            setCustomers(data)
-        });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+        loadLazyData();
+    }, [lazyParams]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const loadLazyData = () => {
+        setLoading(true);
+
+        if (loadLazyTimeout) {
+            clearTimeout(loadLazyTimeout);
+        }
+
+        console.log(lazyParams)
+
+        //imitate delay of a backend call
+        loadLazyTimeout = setTimeout(() => {
+            customerService.getCustomers({lazyEvent: JSON.stringify(lazyParams)}).then(data => {
+                setTotalRecords(data.totalRecords);
+                setCustomers(data.customers);
+                setLoading(false);
+            });
+        }, 100);
+    }
 
     // Name Column Advanced Filter Icon
     useEffect(() => {
@@ -150,11 +152,7 @@ export default function AdvancedFilterDataGrid() {
 
         const dateFilterOptions = [
             { name: 'Equals', code: 'equals' },
-            { name: 'NotEquals', code: 'notEquals' },
-            { name: 'LessThan', code: 'lt' },
-            { name: 'LessThanEqual', code: 'lte' },
-            { name: 'GreaterThan', code: 'gt' },
-            { name: 'GreaterThanEqual', code: 'gte' }
+            { name: 'NotEquals', code: 'notEquals' }
         ]
 
         advancedFilterListBox(
@@ -177,6 +175,26 @@ export default function AdvancedFilterDataGrid() {
         advancedFilterOutsideClick(customDateFilterIconClassName, filterDateListboxWrapperClassName)
     }, [])
 
+    const onPage = (event) => {
+        let _lazyParams = { ...lazyParams, ...event };
+        setLazyParams(_lazyParams);
+    }
+
+    const onSort = (event) => {
+        let _lazyParams = { ...lazyParams, ...event };
+        setLazyParams(_lazyParams);
+    }
+
+    const onFilter = (event) => {
+        if (event.filters && event.filters.date && event.filters.date.value) {
+            event.filters.date.value = formatDate(event.filters.date.value)
+        }
+
+        let _lazyParams = { ...lazyParams, ...event };
+        _lazyParams['first'] = 0;
+        setLazyParams(_lazyParams);
+    }
+
     const filterDate = (value, filter) => {
         if (filter === undefined || filter === null || (typeof filter === 'string' && filter.trim() === '')) {
             return true;
@@ -191,14 +209,6 @@ export default function AdvancedFilterDataGrid() {
                 return value === formatDate(filter)
             case 'notEquals':
                 return value !== formatDate(filter)
-            case 'lt':
-                return value < formatDate(filter)
-            case 'lte':
-                return value <= formatDate(filter)
-            case 'gt':
-                return value > formatDate(filter)
-            case 'gte':
-                return value >= formatDate(filter)
             default:
                 return value === formatDate(filter)
         }
@@ -219,30 +229,13 @@ export default function AdvancedFilterDataGrid() {
         return date.getFullYear() + '-' + month + '-' + day;
     }
 
-    const copyToClipboard = (str) => {
-        // Create new element
-        var el = document.createElement("textarea");
-        // Set value (string to be copied)
-        el.value = str;
-        // Set non-editable to avoid focus and move outside of view
-        el.setAttribute("readonly", "");
-        el.style = { position: "absolute", left: "-9999px" };
-        document.body.appendChild(el);
-        // Select text inside element
-        el.select();
-        // Copy text to clipboard
-        document.execCommand("copy");
-        // Remove temporary element
-        document.body.removeChild(el);
-    };
-
     const onRepresentativesChange = (e) => {
         dt.current.filter(e.value, 'representative.name', 'in');
         setSelectedRepresentative(e.value);
     }
 
     const onDateChange = (e) => {
-        dt.current.filter(e.value, 'date', 'custom');
+        dt.current.filter(e.value, 'date', dateFilterMatchMode);
         setSelectedDate(e.value);
     }
 
@@ -260,33 +253,11 @@ export default function AdvancedFilterDataGrid() {
         );
     }
 
-    // Return class for adding rowClass
-    const rowClass = (data) => {
-        return {
-            'row-accessories': data.country.name === 'Egypt'
-        }
-    }
-
     const countryBodyTemplate = (rowData) => {
-        // Add ClassNames with classNames Utility
-        const stockClassName = classNames({
-            'outofstock': rowData.country.name === 'Algeria',
-            'lowstock': rowData.country.name === 'Egypt',
-            'instock': rowData.country.name === 'Slovenia'
-        });
-
-        // Change classNames with some condition
-        let iconClassName = ''
-        if (rowData.country.name === 'Algeria') {
-            iconClassName = 'pi pi-angle-down'
-        } else if (rowData.country.name === 'Egypt' || rowData.country.name === 'Slovenia') {
-            iconClassName = 'pi pi-angle-up'
-        }
-
         return (
-            <div className={stockClassName}>
+            <div>
                 <span className="p-column-title">Country</span>
-                <i alt="flag" className={iconClassName} onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={30} />
+                <i alt="flag" className='pi pi-flag' onError={(e) => e.target.src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} width={30} />
                 <span className="image-text">{rowData.country.name}</span>
             </div>
         );
@@ -364,29 +335,28 @@ export default function AdvancedFilterDataGrid() {
     const dateFilter = <Calendar value={selectedDate} onChange={onDateChange} dateFormat="yy-mm-dd" className="p-column-filter" placeholder="Registration Date" />;
     const statusFilter = <Dropdown value={selectedStatus} options={statuses} onChange={onStatusChange} itemTemplate={statusItemTemplate} placeholder="Select a Status" className="p-column-filter" showClear />;
 
-    console.log(dateFilterMatchMode)
-
     return (
         <div className="datatable-filter-demo">
-            <ContextMenu
-                model={menuModel}
-                ref={cm}
-                onHide={() => setSelectedProduct(null)}
-            />
             <div className="card">
                 <DataTable
                     ref={dt}
                     value={customers}
+                    lazy
                     paginator
+                    first={lazyParams.first}
                     rows={10}
+                    totalRecords={totalRecords}
+                    onFilter={onFilter}
+                    filters={lazyParams.filters}
+                    onPage={onPage}
+                    onSort={onSort}
+                    sortField={lazyParams.sortField}
+                    sortOrder={lazyParams.sortOrder}
+                    loading={loading}
                     header={header}
                     className="p-datatable-customers"
                     globalFilter={globalFilter}
                     emptyMessage="No customers found."
-                    contextMenuSelection={selectedProduct}
-                    onContextMenuSelectionChange={(e) => setSelectedProduct(e.originalEvent.target.innerText)}
-                    onContextMenu={(e) => cm.current.show(e.originalEvent)}
-                    rowClassName={rowClass}
                 >
                     <Column
                         field="name"

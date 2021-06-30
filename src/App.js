@@ -8,6 +8,7 @@ import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 
 // Components
+import LazyLoadDataGrid from './components/LazyLoadDataGrid/LazyLoadDataGrid'
 import AdvancedFilterDataGrid from './components/AdvancedFilterDataGrid/AdvancedFilterDataGrid'
 import ColAndRowReorderingDataGrid from './components/ColAndRowReorderingDataGrid/ColAndRowReorderingDataGrid'
 import ColumnHidingDataGrid from './components/ColumnHidingDataGrid/ColumnHidingDataGrid'
@@ -34,6 +35,9 @@ function App() {
       <div className="card">
         <h5>Prime React Examples</h5>
         <TabView>
+          <TabPanel header="Lazy Load">
+            <LazyLoadDataGrid />
+          </TabPanel>
           <TabPanel header="Advanced Filter">
             <AdvancedFilterDataGrid />
           </TabPanel>
