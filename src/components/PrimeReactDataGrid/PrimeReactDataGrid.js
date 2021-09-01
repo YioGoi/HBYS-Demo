@@ -29,14 +29,12 @@ export default function PrimeReactDataGrid() {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div>
-            <DataTable value={customers} loading={loading}>
-                <Column field="dataIndex" header="Index"></Column>
-                <Column field="name" header="Name"></Column>
-                <Column field="country.name" header="Country"></Column>
-                <Column field="representative.name" header="Representative"></Column>
-                <Column field="status" header="Status"></Column>
-            </DataTable>
-        </div>
+        <DataTable value={customers} loading={loading}>
+            <Column field="dataIndex" header="Index"></Column>
+            <Column field="name" header="Name"></Column>
+            <Column field="country.name" header="Country"></Column>
+            <Column field="representative.name" header="Representative"></Column>
+            <Column field="status" header="Status"></Column>
+        </DataTable>
     )
 }

@@ -8,8 +8,9 @@ import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 
 // Components
-import LazyLoadDataGrid from './components/LazyLoadDataGrid/LazyLoadDataGrid'
 import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
+import ReactDataGridIO from './components/ReactDataGridIO/ReactDataGridIO'
+import LazyLoadDataGrid from './components/LazyLoadDataGrid/LazyLoadDataGrid'
 import AdvancedFilterDataGrid from './components/AdvancedFilterDataGrid/AdvancedFilterDataGrid'
 import ColAndRowReorderingDataGrid from './components/ColAndRowReorderingDataGrid/ColAndRowReorderingDataGrid'
 import ColumnHidingDataGrid from './components/ColumnHidingDataGrid/ColumnHidingDataGrid'
@@ -38,6 +39,9 @@ function App() {
         <TabView>
           <TabPanel header="Prime Datagrid Test">
             <PrimeReactDataGrid />
+          </TabPanel>
+          <TabPanel header="React Datagrid Test">
+            <ReactDataGridIO />
           </TabPanel>
           <TabPanel header="Lazy Load">
             <LazyLoadDataGrid />
