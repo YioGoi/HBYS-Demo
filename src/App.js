@@ -9,6 +9,7 @@ import 'primeflex/primeflex.css'
 
 // Components
 import LazyLoadDataGrid from './components/LazyLoadDataGrid/LazyLoadDataGrid'
+import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
 import AdvancedFilterDataGrid from './components/AdvancedFilterDataGrid/AdvancedFilterDataGrid'
 import ColAndRowReorderingDataGrid from './components/ColAndRowReorderingDataGrid/ColAndRowReorderingDataGrid'
 import ColumnHidingDataGrid from './components/ColumnHidingDataGrid/ColumnHidingDataGrid'
@@ -22,7 +23,7 @@ import CustomButton from './components/core/CustomButton/CustomButton'
 
 function App() {
   // Local State
-  const [ loading, setLoading ] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleOnClick = e => {
     e.preventDefault()
@@ -35,6 +36,9 @@ function App() {
       <div className="card">
         <h5>Prime React Examples</h5>
         <TabView>
+          <TabPanel header="Prime Datagrid Test">
+            <PrimeReactDataGrid />
+          </TabPanel>
           <TabPanel header="Lazy Load">
             <LazyLoadDataGrid />
           </TabPanel>
@@ -64,9 +68,9 @@ function App() {
           </TabPanel>
           <TabPanel header="Core Components Example">
             <SaveButton />
-            <br/>
-            <br/>
-            <CustomButton 
+            <br />
+            <br />
+            <CustomButton
               label='Custom Button'
               icon='pi pi-check'
               iconPos='left'
@@ -78,7 +82,7 @@ function App() {
               badge={2}
               badgeClassName='custom-button-badge'
               tooltip={'I am a tooltip'}
-              tooltipOptions={{ position: 'bottom'}}
+              tooltipOptions={{ position: 'bottom' }}
             />
           </TabPanel>
         </TabView>

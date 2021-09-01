@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
+// Performance
+// import Perf from 'react-addons-perf'
+
 // Styles
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
@@ -377,8 +380,8 @@ export default function AdvancedFilterDataGrid() {
                 <DataTable
                     ref={dt}
                     value={customers}
-                    paginator
-                    rows={10}
+                    // paginator
+                    rows={100}
                     header={header}
                     className="p-datatable-customers"
                     globalFilter={globalFilter}
