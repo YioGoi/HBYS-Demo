@@ -7,7 +7,8 @@ import {
     SAVE_CUSTOMER_INFORMATION,
     SET_SELECTED_DATA_TABLE_OPTION,
     SET_SAVED_TEXT,
-    SET_IS_ANT_MODAL_VISIBLE
+    SET_IS_ANT_MODAL_VISIBLE,
+    UPDATED_CUSTOMERS_DATA_GRID
 } from "./formActionTypes"
 
 // initial state
@@ -91,6 +92,11 @@ const formReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAntModalVisible: action.payload
+            }
+        case UPDATED_CUSTOMERS_DATA_GRID:
+            return {
+                ...state,
+                customers: action.payload
             }
         default:
             return state

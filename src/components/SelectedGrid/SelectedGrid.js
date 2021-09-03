@@ -75,7 +75,7 @@ export default function SelectedGrid() {
         <DataTable className="selected-grid" value={dataSource} scrollable scrollHeight="200px">
             {
                 columns.map((column, index) => (
-                    <Column key={index} field={column} header={column}></Column>
+                    <Column filter key={index} field={column} header={column}></Column>
                 ))
             }
         </DataTable>

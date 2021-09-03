@@ -9,7 +9,7 @@ import {
 } from '../../redux'
 
 // Ant Design Components
-import { Menu, Dropdown, Button } from 'antd';
+import { Menu, Dropdown, Button, DatePicker } from 'antd';
 import { UserOutlined, DownOutlined } from '@ant-design/icons';
 
 // Style
@@ -44,14 +44,24 @@ export default function DataTableSelection() {
         </Menu>
     )
 
+    const datePickerOnChange = (date, dateString) => {
+        console.log(date, dateString)
+    }
+
     return (
         <div className="selection-drop-down">
-            <span className="selection-title">Select your data source:</span>
-            <Dropdown overlay={menu} trigger={['click']}>
-                <Button trigger={['click']}>
-                    {selectedOption} <DownOutlined />
-                </Button>
-            </Dropdown>
+            <div className="select-data-source">
+                <span className="selection-title">Select your data source: </span>
+                <Dropdown overlay={menu} trigger={['click']}>
+                    <Button trigger={['click']}>
+                        {selectedOption} <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </div>
+            <div className="select-date">
+                <span>Select date: </span>
+                <DatePicker onChange={datePickerOnChange} />
+            </div>
         </div>
     )
 }

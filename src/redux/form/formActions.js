@@ -7,7 +7,8 @@ import {
     SAVE_CUSTOMER_INFORMATION,
     SET_SELECTED_DATA_TABLE_OPTION,
     SET_SAVED_TEXT,
-    SET_IS_ANT_MODAL_VISIBLE
+    SET_IS_ANT_MODAL_VISIBLE,
+    UPDATED_CUSTOMERS_DATA_GRID
 } from './formActionTypes'
 
 export const setCustomers = customers => {
@@ -69,5 +70,12 @@ export const setIsAntModalVisible = visible => {
     return {
         type: SET_IS_ANT_MODAL_VISIBLE,
         payload: visible
+    }
+}
+
+export const updateCustomersDataGrid = updatedResults => {
+    return {
+        type: UPDATED_CUSTOMERS_DATA_GRID,
+        payload: updatedResults
     }
 }

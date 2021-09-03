@@ -7,5 +7,6 @@ export {
     saveCustomerInformation,
     setSelectedDataTableOption,
     setSavedText,
-    setIsAntModalVisible
+    setIsAntModalVisible,
+    updateCustomersDataGrid
 } from './form/formActions'
