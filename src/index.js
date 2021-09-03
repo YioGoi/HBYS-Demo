@@ -4,15 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// Redux
+import { Provider } from "react-redux"
+
+// Create a Global Store
+import store from "./redux/store"
+
 // Styles of Prime React
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.css';
 import 'primeflex/primeflex.css';
+import 'antd/dist/antd.css';
+
+// Global Store for global processes like Authorization etc...
+const globalStore = { ...store }
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={globalStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

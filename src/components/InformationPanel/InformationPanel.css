@@ -1,0 +1,34 @@
+.information-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.box {
+    width: 100%;
+}
+
+.information-name {
+    padding: 12px 12px 12px 0;
+}
+
+.information-company {
+    padding: 12px 12px 12px 0;
+}
+
+.information-activity {
+    padding: 12px 12px 12px 0;
+}
+
+.information-status {
+    padding: 12px 12px 12px 0;
+}
+
+.information-submit-button {
+    padding: 12px 12px 12px 0;
+}
+
+.save-button {
+    background-color: #339cf4 !important;
+    color: #fff !important;
+}

@@ -1,0 +1,5 @@
+.p-datatable .p-datatable-tbody > tr > td {
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+}

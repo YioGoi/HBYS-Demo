@@ -6,9 +6,13 @@ import 'primeicons/primeicons.css'
 import 'primereact/resources/themes/saga-blue/theme.css'
 import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
+import './App.css'
 
 // Components
 import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
+import SelectedGrid from './components/SelectedGrid/SelectedGrid'
+import InformationPanel from './components/InformationPanel/InformationPanel'
+import PrimeEditor from './components/PrimeEditor/PrimeEditor'
 import ReactDataGridIO from './components/ReactDataGridIO/ReactDataGridIO'
 import LazyLoadDataGrid from './components/LazyLoadDataGrid/LazyLoadDataGrid'
 import AdvancedFilterDataGrid from './components/AdvancedFilterDataGrid/AdvancedFilterDataGrid'
@@ -21,6 +25,7 @@ import MasterDetailDataGrid from './components/MasterDetailDataGrid/MasterDetail
 import ColumnGroupDataGrid from './components/ColumnGroupDataGrid/ColumnGroupDataGrid'
 import SaveButton from './components/core/SaveButton/SaveButton'
 import CustomButton from './components/core/CustomButton/CustomButton'
+import AntModal from './components/AntModal/AntModal'
 
 function App() {
   // Local State
@@ -38,7 +43,16 @@ function App() {
         <h5>Prime React Examples</h5>
         <TabView>
           <TabPanel header="Prime Datagrid Test">
-            <PrimeReactDataGrid />
+            <InformationPanel />
+            <div className="grid-container">
+              <div className="data-table">
+                <PrimeReactDataGrid />
+              </div>
+              <div className="data-table select-data-table">
+                <SelectedGrid />
+              </div>
+            </div>
+            <PrimeEditor />
           </TabPanel>
           <TabPanel header="React Datagrid Test">
             <ReactDataGridIO />
@@ -91,6 +105,7 @@ function App() {
           </TabPanel>
         </TabView>
       </div>
+      <AntModal />
     </div>
   );
 }
