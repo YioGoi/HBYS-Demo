@@ -44,7 +44,7 @@ export default function PrimeEditor() {
     return (
         <div className="editor-container">
             <div className="quill-editor">
-                <Editor style={{ height: '320px' }} value={text} onTextChange={(e) => setText(e.textValue)} />
+                <Editor style={{ height: '100px' }} value={text} onTextChange={(e) => setText(e.textValue)} />
             </div>
             <div className="confirm-button-for-editor">
                 <Toast ref={toast} />

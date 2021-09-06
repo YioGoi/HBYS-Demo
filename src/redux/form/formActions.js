@@ -8,7 +8,10 @@ import {
     SET_SELECTED_DATA_TABLE_OPTION,
     SET_SAVED_TEXT,
     SET_IS_ANT_MODAL_VISIBLE,
-    UPDATED_CUSTOMERS_DATA_GRID
+    UPDATED_CUSTOMERS_DATA_GRID,
+    GET_RANDOM_QUOTES_REQUEST,
+    GET_RANDOM_QUOTES_FAILURE,
+    GET_RANDOM_QUOTES_SUCCESS
 } from './formActionTypes'
 
 export const setCustomers = customers => {
@@ -77,5 +80,25 @@ export const updateCustomersDataGrid = updatedResults => {
     return {
         type: UPDATED_CUSTOMERS_DATA_GRID,
         payload: updatedResults
+    }
+}
+
+export const getRandomQuotesRequest = () => {
+    return {
+        type: GET_RANDOM_QUOTES_REQUEST
+    }
+}
+
+export const getRandomQuotesFailure = error => {
+    return {
+        type: GET_RANDOM_QUOTES_FAILURE,
+        payload: error
+    }
+}
+
+export const getRandomQuotesSuccess = quote => {
+    return {
+        type: GET_RANDOM_QUOTES_SUCCESS,
+        payload: quote
     }
 }

@@ -6,6 +6,22 @@
     padding: 0 12px 0 0;
 }
 
-.select-date {
+.select-data-source {
+    padding-top: 12px;
+}
+
+.input-text-area-switch {
+    padding-top: 12px;
+}
+
+.input-or-text-area {
+    padding-top: 12px;
+}
+
+.input-number-slider {
+    padding-top: 12px;
+}
+
+.avatar-group {
     padding-top: 12px;
 }
