@@ -37,6 +37,8 @@ function App() {
   // Local State
   const [loading, setLoading] = useState(false)
 
+  const countArray = [1,2,3,4,5,6,7,8,9]
+
   useEffect(() => {
     getAddress()
     getCoffee()
@@ -64,14 +66,18 @@ function App() {
               </div>
             </div>
             <PrimeEditor />
-            <div className="second-grid-container">
-              <div className="data-table">
-                <AddressDataGrid />
-              </div>
-              <div className="data-table select-data-table">
-                <CoffeeDataGrid />
-              </div>
-            </div>
+            {
+              countArray.map(count => (
+                <div className="alt-grid-container">
+                  <div className="data-table">
+                    <AddressDataGrid />
+                  </div>
+                  <div className="data-table select-data-table">
+                    <CoffeeDataGrid />
+                  </div>
+                </div>
+              ))
+            }
           </TabPanel>
           <TabPanel header="React Datagrid Test">
             <ReactDataGridIO />

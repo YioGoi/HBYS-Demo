@@ -10,9 +10,11 @@ import {
 
 // Prime Components
 import { Editor } from 'primereact/editor';
-import { confirmPopup } from 'primereact/confirmpopup';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
+
+// Ant Components
+import { Popconfirm } from 'antd'
 
 // Style
 import './PrimeEditor.css'
@@ -31,16 +33,6 @@ export default function PrimeEditor() {
         toast.current.show({ severity: 'info', summary: 'Rejected', detail: 'Text is not saved', life: 3000 })
     }
 
-    const confirm = (event) => {
-        confirmPopup({
-            target: event.currentTarget,
-            message: 'Are you sure you want to save this text?',
-            icon: 'pi pi-exclamation-triangle',
-            accept,
-            reject
-        })
-    }
-
     return (
         <div className="editor-container">
             <div className="quill-editor">
@@ -48,7 +40,15 @@ export default function PrimeEditor() {
             </div>
             <div className="confirm-button-for-editor">
                 <Toast ref={toast} />
-                <Button onClick={confirm} icon="pi pi-check" label="Confirm" className="p-mr-2"></Button>
+                <Popconfirm
+                    title="Are you sure you want to save this text?"
+                    onConfirm={accept}
+                    onCancel={reject}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <Button icon="pi pi-check" label="Confirm" className="p-mr-2"></Button>
+                </Popconfirm>
             </div>
         </div>
     )
