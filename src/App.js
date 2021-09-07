@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TabView, TabPanel } from 'primereact/tabview'
 
 // Styles
@@ -8,8 +8,14 @@ import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
+// API
+import getAddress from './api/getAddress'
+import getCoffee from './api/getCoffee'
+
 // Components
 import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
+import AddressDataGrid from './components/AddressDataGrid/AddressDataGrid'
+import CoffeeDataGrid from './components/CoffeeDataGrid/CoffeeDataGrid'
 import SelectedGrid from './components/SelectedGrid/SelectedGrid'
 import InformationPanel from './components/InformationPanel/InformationPanel'
 import PrimeEditor from './components/PrimeEditor/PrimeEditor'
@@ -30,6 +36,11 @@ import AntModal from './components/AntModal/AntModal'
 function App() {
   // Local State
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    getAddress()
+    getCoffee()
+  }, [])
 
   const handleOnClick = e => {
     e.preventDefault()
@@ -53,6 +64,14 @@ function App() {
               </div>
             </div>
             <PrimeEditor />
+            <div className="second-grid-container">
+              <div className="data-table">
+                <AddressDataGrid />
+              </div>
+              <div className="data-table select-data-table">
+                <CoffeeDataGrid />
+              </div>
+            </div>
           </TabPanel>
           <TabPanel header="React Datagrid Test">
             <ReactDataGridIO />

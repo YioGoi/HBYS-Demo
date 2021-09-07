@@ -11,7 +11,13 @@ import {
     UPDATED_CUSTOMERS_DATA_GRID,
     GET_RANDOM_QUOTES_REQUEST,
     GET_RANDOM_QUOTES_FAILURE,
-    GET_RANDOM_QUOTES_SUCCESS
+    GET_RANDOM_QUOTES_SUCCESS,
+    GET_ADDRESS_REQUEST,
+    GET_ADDRESS_FAILURE,
+    GET_ADDRESS_SUCCESS,
+    GET_COFFEE_REQUEST,
+    GET_COFFEE_FAILURE,
+    GET_COFFEE_SUCCESS
 } from './formActionTypes'
 
 export const setCustomers = customers => {
@@ -100,5 +106,45 @@ export const getRandomQuotesSuccess = quote => {
     return {
         type: GET_RANDOM_QUOTES_SUCCESS,
         payload: quote
+    }
+}
+
+export const getAddressRequest = () => {
+    return {
+        type: GET_ADDRESS_REQUEST
+    }
+}
+
+export const getAddressFailure = error => {
+    return {
+        type: GET_ADDRESS_FAILURE,
+        payload: error
+    }
+}
+
+export const getAddressSuccess = address => {
+    return {
+        type: GET_ADDRESS_SUCCESS,
+        payload: address
+    }
+}
+
+export const getCoffeeRequest = () => {
+    return {
+        type: GET_COFFEE_REQUEST
+    }
+}
+
+export const getCoffeeFailure = error => {
+    return {
+        type: GET_COFFEE_FAILURE,
+        payload: error
+    }
+}
+
+export const getCoffeeSuccess = coffee => {
+    return {
+        type: GET_COFFEE_SUCCESS,
+        payload: coffee
     }
 }

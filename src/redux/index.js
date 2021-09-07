@@ -11,5 +11,11 @@ export {
     updateCustomersDataGrid,
     getRandomQuotesRequest,
     getRandomQuotesFailure,
-    getRandomQuotesSuccess
+    getRandomQuotesSuccess,
+    getAddressRequest,
+    getAddressFailure,
+    getAddressSuccess,
+    getCoffeeRequest,
+    getCoffeeFailure,
+    getCoffeeSuccess
 } from './form/formActions'

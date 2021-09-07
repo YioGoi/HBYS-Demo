@@ -11,7 +11,13 @@ import {
     UPDATED_CUSTOMERS_DATA_GRID,
     GET_RANDOM_QUOTES_REQUEST,
     GET_RANDOM_QUOTES_FAILURE,
-    GET_RANDOM_QUOTES_SUCCESS
+    GET_RANDOM_QUOTES_SUCCESS,
+    GET_ADDRESS_REQUEST,
+    GET_ADDRESS_FAILURE,
+    GET_ADDRESS_SUCCESS,
+    GET_COFFEE_REQUEST,
+    GET_COFFEE_FAILURE,
+    GET_COFFEE_SUCCESS
 } from "./formActionTypes"
 
 // initial state
@@ -26,7 +32,13 @@ const initialState = {
     isAntModalVisible: false,
     getRandomQuoteLoading: false,
     getRandomQuoteFailure: null,
-    getRandomQuoteSuccess: null
+    getRandomQuoteSuccess: null,
+    getAddressLoading: false,
+    getAddressFailure: null,
+    getAddressSuccess: null,
+    getCoffeeLoading: false,
+    getCoffeeFailure: null,
+    getCoffeeSuccess: null
 }
 
 // Form Reducer
@@ -121,6 +133,42 @@ const formReducer = (state = initialState, action) => {
                 getRandomQuoteLoading: false,
                 getRandomQuoteFailure: false,
                 getRandomQuoteSuccess: action.payload
+            }
+        case GET_ADDRESS_REQUEST:
+            return {
+                ...state,
+                getAddressLoading: true
+            }
+        case GET_ADDRESS_FAILURE:
+            return {
+                ...state,
+                getAddressLoading: false,
+                getAddressFailure: action.payload
+            }
+        case GET_ADDRESS_SUCCESS:
+            return {
+                ...state,
+                getAddressLoading: false,
+                getAddressFailure: false,
+                getAddressSuccess: action.payload
+            }
+        case GET_COFFEE_REQUEST:
+            return {
+                ...state,
+                getCoffeeLoading: true
+            }
+        case GET_COFFEE_FAILURE:
+            return {
+                ...state,
+                getCoffeeLoading: false,
+                getCoffeeFailure: action.payload
+            }
+        case GET_COFFEE_SUCCESS:
+            return {
+                ...state,
+                getCoffeeLoading: false,
+                getCoffeeFailure: false,
+                getCoffeeSuccess: action.payload
             }
         default:
             return state
