@@ -88,7 +88,7 @@ export default function InformationPanel() {
     }
 
     const handleInformations = () => {
-        //store.dispatch(saveCustomerInformation())
+        store.dispatch(saveCustomerInformation())
         getAddress()
         getCoffee()
     }
