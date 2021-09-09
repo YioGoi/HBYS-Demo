@@ -9,8 +9,8 @@ import 'primeflex/primeflex.css'
 import './App.css'
 
 // API
-import getAddress from './api/getAddress'
-import getCoffee from './api/getCoffee'
+// import getAddress from './api/getAddress'
+// import getCoffee from './api/getCoffee'
 
 // Components
 import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
