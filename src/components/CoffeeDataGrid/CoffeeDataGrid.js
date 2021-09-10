@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 
 // Styles
 import './CoffeeDataGrid.css'
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 // Core Components
 import DataGrid from '../core/DataGrid/DataGrid'
 
-export default function CoffeeDataGrid() {
+function CoffeeDataGrid() {
     // Global State
     const getCoffeeSuccess = useSelector(state => state.form.getCoffeeSuccess)
 
@@ -35,3 +35,5 @@ export default function CoffeeDataGrid() {
         </>
     )
 }
+
+export default memo(CoffeeDataGrid)

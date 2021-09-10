@@ -4,7 +4,7 @@ import React from 'react'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 
-export default function DataGrid({
+function DataGrid({
     dataSource,
     columns,
     gridClassName,
@@ -36,3 +36,9 @@ export default function DataGrid({
         </DataTable>
     )
 }
+
+function areEqual (prevProps, nextProps) {
+     
+}
+
+export default React.memo(DataGrid, areEqual)

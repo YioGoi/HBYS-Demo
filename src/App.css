@@ -25,3 +25,14 @@
     flex-wrap: nowrap;
     padding-top: 12px;
 }
+
+.prime-progress-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.prime-progress-spinner > .p-progress-spinner > .p-progress-spinner-svg {
+    width: 48px !important;
+} 

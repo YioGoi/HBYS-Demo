@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 // Core Components
 import DataGrid from '../core/DataGrid/DataGrid'
 
-export default function AddressDataGrid() {
+function AddressDataGrid() {
     // Global State
     const getAddressSuccess = useSelector(state => state.form.getAddressSuccess)
 
@@ -35,3 +35,5 @@ export default function AddressDataGrid() {
         </>
     )
 }
+
+export default React.memo(AddressDataGrid)

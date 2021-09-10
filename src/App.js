@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, lazy, Suspense } from 'react'
 import { TabView, TabPanel } from 'primereact/tabview'
 
 // Styles
@@ -8,12 +8,15 @@ import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
+// Redux
+import { useSelector } from 'react-redux'
+
 // Components
 import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
-import AddressDataGrid from './components/AddressDataGrid/AddressDataGrid'
-import CoffeeDataGrid from './components/CoffeeDataGrid/CoffeeDataGrid'
-import FoodDataGrid from './components/FoodDataGrid/FoodDataGrid'
-import DeviceDataGrid from './components/DeviceDataGrid/DeviceDataGrid'
+// import AddressDataGrid from './components/AddressDataGrid/AddressDataGrid'
+// import CoffeeDataGrid from './components/CoffeeDataGrid/CoffeeDataGrid'
+// import FoodDataGrid from './components/FoodDataGrid/FoodDataGrid'
+// import DeviceDataGrid from './components/DeviceDataGrid/DeviceDataGrid'
 import SelectedGrid from './components/SelectedGrid/SelectedGrid'
 import InformationPanel from './components/InformationPanel/InformationPanel'
 import PrimeEditor from './components/PrimeEditor/PrimeEditor'
@@ -30,8 +33,20 @@ import ColumnGroupDataGrid from './components/ColumnGroupDataGrid/ColumnGroupDat
 import SaveButton from './components/core/SaveButton/SaveButton'
 import CustomButton from './components/core/CustomButton/CustomButton'
 import AntModal from './components/AntModal/AntModal'
+import { ProgressSpinner } from 'primereact/progressspinner'
+
+const AddressDataGrid = lazy(() => import('./components/AddressDataGrid/AddressDataGrid'))
+const CoffeeDataGrid = lazy(() => import('./components/CoffeeDataGrid/CoffeeDataGrid'))
+const FoodDataGrid = lazy(() => import('./components/FoodDataGrid/FoodDataGrid'))
+const DeviceDataGrid = lazy(() => import('./components/DeviceDataGrid/DeviceDataGrid'))
 
 function App() {
+  // Global State
+  const getAddressLoading = useSelector(state => state.form.getAddressLoading)
+  const getCoffeeLoading = useSelector(state => state.form.getCoffeeLoading)
+  const getFoodLoading = useSelector(state => state.form.getFoodLoading)
+  const getDeviceLoading = useSelector(state => state.form.getDeviceLoading)
+
   // Local State
   const [loading, setLoading] = useState(false)
 
@@ -59,7 +74,16 @@ function App() {
               </div>
             </div>
             <PrimeEditor />
+            <Suspense fallback={<></>}>
             {
+              getAddressLoading ||
+              getCoffeeLoading ||
+              getFoodLoading ||
+              getDeviceLoading ?
+              <div className='prime-progress-spinner'>
+                <ProgressSpinner/>
+              </div>
+              :
               countArray.map((count, index) => (
                 <div className="alt-grid-container" key={index}>
                   <div className="data-tables">
@@ -83,6 +107,7 @@ function App() {
                 </div>
               ))
             }
+            </Suspense>
           </TabPanel>
           <TabPanel header="React Datagrid Test">
             <ReactDataGridIO />

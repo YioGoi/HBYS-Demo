@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 // Styles
 import './DeviceDataGrid.css'
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 // Core Components
 import DataGrid from '../core/DataGrid/DataGrid'
 
-export default function DeviceDataGrid() {
+function DeviceDataGrid() {
     // Global State
     const getDeviceSuccess = useSelector(state => state.form.getDeviceSuccess)
 
@@ -35,3 +35,5 @@ export default function DeviceDataGrid() {
         </>
     )
 }
+
+export default memo(DeviceDataGrid)

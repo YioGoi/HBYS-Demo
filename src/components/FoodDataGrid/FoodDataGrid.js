@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 
 // Styles
 import './FoodDataGrid.css'
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 // Core Components
 import DataGrid from '../core/DataGrid/DataGrid'
 
-export default function FoodDataGrid() {
+function FoodDataGrid() {
     // Global State
     const getFoodSuccess = useSelector(state => state.form.getFoodSuccess)
 
@@ -35,3 +35,5 @@ export default function FoodDataGrid() {
         </>
     )
 }
+
+export default memo(FoodDataGrid)
