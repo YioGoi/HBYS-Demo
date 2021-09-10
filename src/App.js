@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TabView, TabPanel } from 'primereact/tabview'
 
 // Styles
@@ -8,14 +8,12 @@ import 'primereact/resources/primereact.css'
 import 'primeflex/primeflex.css'
 import './App.css'
 
-// API
-// import getAddress from './api/getAddress'
-// import getCoffee from './api/getCoffee'
-
 // Components
 import PrimeReactDataGrid from './components/PrimeReactDataGrid/PrimeReactDataGrid'
 import AddressDataGrid from './components/AddressDataGrid/AddressDataGrid'
 import CoffeeDataGrid from './components/CoffeeDataGrid/CoffeeDataGrid'
+import FoodDataGrid from './components/FoodDataGrid/FoodDataGrid'
+import DeviceDataGrid from './components/DeviceDataGrid/DeviceDataGrid'
 import SelectedGrid from './components/SelectedGrid/SelectedGrid'
 import InformationPanel from './components/InformationPanel/InformationPanel'
 import PrimeEditor from './components/PrimeEditor/PrimeEditor'
@@ -37,12 +35,7 @@ function App() {
   // Local State
   const [loading, setLoading] = useState(false)
 
-  const countArray = [1,2,3,4,5,6,7,8,9]
-
-  useEffect(() => {
-    // getAddress()
-    // getCoffee()
-  }, [])
+  const countArray = [1,2,3,4,5]
 
   const handleOnClick = e => {
     e.preventDefault()
@@ -67,13 +60,25 @@ function App() {
             </div>
             <PrimeEditor />
             {
-              countArray.map(count => (
-                <div className="alt-grid-container">
-                  <div className="data-table">
+              countArray.map((count, index) => (
+                <div className="alt-grid-container" key={index}>
+                  <div className="data-tables">
                     <AddressDataGrid />
                   </div>
-                  <div className="data-table select-data-table">
+                  <div className="data-tables select-data-table">
                     <CoffeeDataGrid />
+                  </div>
+                </div>
+              ))
+            }
+            {
+              countArray.map((count, index) => (
+                <div className="alt-grid-container" key={index}>
+                  <div className="data-tables">
+                    <FoodDataGrid />
+                  </div>
+                  <div className="data-tables select-data-table">
+                    <DeviceDataGrid />
                   </div>
                 </div>
               ))

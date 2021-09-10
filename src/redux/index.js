@@ -17,5 +17,11 @@ export {
     getAddressSuccess,
     getCoffeeRequest,
     getCoffeeFailure,
-    getCoffeeSuccess
+    getCoffeeSuccess,
+    getDeviceRequest,
+    getDeviceFailure,
+    getDeviceSuccess,
+    getFoodRequest,
+    getFoodFailure,
+    getFoodSuccess
 } from './form/formActions'

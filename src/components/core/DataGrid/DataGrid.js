@@ -23,8 +23,9 @@ export default function DataGrid({
             style={{ width: gridWidth }}
         >
             {
-                columns.map(column => (
+                columns.map((column, index) => (
                     <Column 
+                        key={index}
                         field={column} 
                         header={column}
                         filter

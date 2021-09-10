@@ -21,10 +21,6 @@ import { UserOutlined, DownOutlined } from '@ant-design/icons';
 
 import DataTableSelection from '../DataTableSelection/DataTableSelection'
 
-// API
-import getAddress from '../../api/getAddress'
-import getCoffee from '../../api/getCoffee'
-
 export default function InformationPanel() {
     // local states
     const [nameValue, setNameValue] = useState(null)
@@ -89,8 +85,6 @@ export default function InformationPanel() {
 
     const handleInformations = () => {
         store.dispatch(saveCustomerInformation())
-        getAddress()
-        getCoffee()
     }
 
     return (

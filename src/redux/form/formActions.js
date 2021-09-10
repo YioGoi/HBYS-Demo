@@ -17,7 +17,13 @@ import {
     GET_ADDRESS_SUCCESS,
     GET_COFFEE_REQUEST,
     GET_COFFEE_FAILURE,
-    GET_COFFEE_SUCCESS
+    GET_COFFEE_SUCCESS,
+    GET_FOOD_REQUEST,
+    GET_FOOD_FAILURE,
+    GET_FOOD_SUCCESS,
+    GET_DEVICE_REQUEST,
+    GET_DEVICE_FAILURE,
+    GET_DEVICE_SUCCESS
 } from './formActionTypes'
 
 export const setCustomers = customers => {
@@ -146,5 +152,45 @@ export const getCoffeeSuccess = coffee => {
     return {
         type: GET_COFFEE_SUCCESS,
         payload: coffee
+    }
+}
+
+export const getFoodRequest = () => {
+    return {
+        type: GET_FOOD_REQUEST
+    }
+}
+
+export const getFoodFailure = error => {
+    return {
+        type: GET_FOOD_FAILURE,
+        payload: error
+    }
+}
+
+export const getFoodSuccess = food => {
+    return {
+        type: GET_FOOD_SUCCESS,
+        payload: food
+    }
+}
+
+export const getDeviceRequest = () => {
+    return {
+        type: GET_DEVICE_REQUEST
+    }
+}
+
+export const getDeviceFailure = error => {
+    return {
+        type: GET_DEVICE_FAILURE,
+        payload: error
+    }
+}
+
+export const getDeviceSuccess = device => {
+    return {
+        type: GET_DEVICE_SUCCESS,
+        payload: device
     }
 }

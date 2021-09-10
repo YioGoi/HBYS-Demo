@@ -17,7 +17,13 @@ import {
     GET_ADDRESS_SUCCESS,
     GET_COFFEE_REQUEST,
     GET_COFFEE_FAILURE,
-    GET_COFFEE_SUCCESS
+    GET_COFFEE_SUCCESS,
+    GET_FOOD_REQUEST,
+    GET_FOOD_FAILURE,
+    GET_FOOD_SUCCESS,
+    GET_DEVICE_REQUEST,
+    GET_DEVICE_FAILURE,
+    GET_DEVICE_SUCCESS,
 } from "./formActionTypes"
 
 // initial state
@@ -38,7 +44,14 @@ const initialState = {
     getAddressSuccess: null,
     getCoffeeLoading: false,
     getCoffeeFailure: null,
-    getCoffeeSuccess: null
+    getCoffeeSuccess: null,
+    getFoodLoading: false,
+    getFoodFailure: null,
+    getFoodSuccess: null,
+    getDeviceLoading: false,
+    getDeviceFailure: null,
+    getDeviceSuccess: null
+
 }
 
 // Form Reducer
@@ -169,6 +182,42 @@ const formReducer = (state = initialState, action) => {
                 getCoffeeLoading: false,
                 getCoffeeFailure: false,
                 getCoffeeSuccess: action.payload
+            }
+        case GET_FOOD_REQUEST:
+            return {
+                ...state,
+                getFoodLoading: true
+            }
+        case GET_FOOD_FAILURE:
+            return {
+                ...state,
+                getFoodLoading: false,
+                getFoodFailure: action.payload
+            }
+        case GET_FOOD_SUCCESS:
+            return {
+                ...state,
+                getFoodLoading: false,
+                getFoodFailure: false,
+                getFoodSuccess: action.payload
+            }
+        case GET_DEVICE_REQUEST:
+            return {
+                ...state,
+                getDeviceLoading: true
+            }
+        case GET_DEVICE_FAILURE:
+            return {
+                ...state,
+                getDeviceLoading: false,
+                getDeviceFailure: action.payload
+            }
+        case GET_DEVICE_SUCCESS:
+            return {
+                ...state,
+                getDeviceLoading: false,
+                getDeviceFailure: false,
+                getDeviceSuccess: action.payload
             }
         default:
             return state
